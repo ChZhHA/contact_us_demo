@@ -49,6 +49,7 @@
   height: 1.5rem;
   line-height: 1.5rem;
   top: 50%;
+  left:10px;
   transform: translateY(-50%);
   vertical-align: center;
   transition: all 0.25s ease;

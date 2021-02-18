@@ -17,10 +17,17 @@ export function createTag({
 
   return tempDiv;
 }
-
+function setStatus(element, key, value) {
+  let target = element;
+  while (target.parentElement && target.parentElement.className === "group") {
+    target = target.parentElement;
+  }
+  target.dataset[key] = value;
+}
 export function createInput({
   placeholder,
   father,
+  style,
   required,
   pattern,
   onChange,
@@ -28,7 +35,8 @@ export function createInput({
 } = {}) {
   const inputCover = createTag({
     className: "input-cover",
-    father
+    father,
+    style
   });
   const label = createTag({
     className: "label",
@@ -39,17 +47,17 @@ export function createInput({
     tagName: "input",
     father: inputCover,
     onfocus: function() {
-      inputCover.dataset.active = true;
+      setStatus(inputCover, "active", true);
     },
     onblur: function() {
-      inputCover.dataset.active = false;
+      setStatus(inputCover, "active", false);
       checkInput();
     },
     oninput: function(e) {
       if (this.value && this.value.length) {
-        inputCover.dataset.filled = true;
+        setStatus(inputCover, "filled", true);
       } else {
-        inputCover.dataset.filled = false;
+        setStatus(inputCover, "filled", false);
       }
       if (onChange) onChange(e);
       checkInput();
@@ -70,21 +78,25 @@ export function createInput({
   }
   return { dom: inputCover, check: checkInput };
 }
+
 export function createSelect({
   father,
   options = [],
   placeholder,
+  style,
   required,
   onChange,
   ...other
 } = {}) {
   const selectContainer = createTag({
     className: "select-cover",
-    father
+    father,
+    style
   });
   const selectCover = createTag({
     tagName: "select",
     father: selectContainer,
+    style,
     onfocus: function() {
       selectContainer.dataset.active = true;
     },

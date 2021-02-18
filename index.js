@@ -17,7 +17,7 @@ request.open(
   "GET",
   "https://gist.githack.com/richsoni/37c6743eb8d1d25d8e509eb9efdd6cf7/raw/8ecf8f39e39d68d950d3e27f376eebfd2dfd2023/mockCityData.json"
 );
-request.onload = function () {
+request.onload = function() {
   try {
     cityData = cityDataHandlder(JSON.parse(request.responseText));
     init();
@@ -97,6 +97,18 @@ function init() {
       }
     })
   );
+
+  const telephoneGroup = createTag({ father: formBody, className: "group" });
+  createSelect({
+    father: telephoneGroup,
+    style: "width:100px;border-right:1px solid #aaa;",
+    options:[{label:"US"},{label:"UK"}]
+  });
+  createInput({
+    father: telephoneGroup,
+    style: "position:absolute;top:0;height:100%;width:calc(100% - 100px);left:100px",
+    placeholder: "telephone"
+  });
 
   createTag({
     tagName: "button",
