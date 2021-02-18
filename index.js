@@ -12,14 +12,20 @@ const appDiv = document.getElementById("app");
 
 let cityData = [];
 
-fetch(
+const request = new XMLHttpRequest();
+request.open(
+  "GET",
   "https://gist.githack.com/richsoni/37c6743eb8d1d25d8e509eb9efdd6cf7/raw/8ecf8f39e39d68d950d3e27f376eebfd2dfd2023/mockCityData.json"
-)
-  .then(res => res.json())
-  .then(res => {
-    cityData = cityDataHandlder(res);
+);
+request.onload = function () {
+  try {
+    cityData = cityDataHandlder(JSON.parse(request.responseText));
     init();
-  });
+  } catch (e) {
+    console.error(e);
+  }
+};
+request.send();
 
 function init() {
   const formContainer = createTag({
